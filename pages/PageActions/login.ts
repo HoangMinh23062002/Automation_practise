@@ -10,3 +10,4 @@ export async function loginCustomer(page:Page, email:string,password:string){
     const element = page.locator(dashboardLocator.Username_icon)
     await element.waitFor({state:"visible"})
 }
+// hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
