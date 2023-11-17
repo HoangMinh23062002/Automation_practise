@@ -22,21 +22,21 @@ export async function CheckavailabilityCheckTxt(page: Page) {
 }
 
 export async function editUserInAvailabilityCheck(page: Page) {
-    await page.waitForLoadState('networkidle')
     await page.locator(Availabilitylocator.account_search_input).click();
     await page.locator(Availabilitylocator.account_search_input).fill(testData.availability_info.account_keyword);
     await page.waitForSelector(Availabilitylocator.dropdown_user_option, { state: 'visible' })
     await page.locator(Availabilitylocator.account_search_input).press('Enter')
+    await page.locator(Availabilitylocator.result).click();
+    await common.waitForPageCompletelyLoaded(page);
+  
 };
 
 export async function SearchUser(page: Page) {
-    await page.waitForLoadState('networkidle');
     await page.locator(Availabilitylocator.account_search_input).click();
     await page.locator(Availabilitylocator.account_search_input).fill(testData.availability_info.account_keyword);
     await page.waitForSelector(Availabilitylocator.dropdown_user_option, { state: 'visible' });
     await page.locator(Availabilitylocator.account_search_input).press('Enter');
     await common.waitForPageCompletelyLoaded(page);
-
 };
 
 export async function EditUser(page: Page) {
@@ -46,5 +46,11 @@ export async function EditUser(page: Page) {
 };
 export async function WinndowTitlrPop(page: Page) {
     await page.waitForLoadState('networkidle');
-    await page.locator(Availabilitylocator.window_popup_title);
+   return await page.locator(Availabilitylocator.window_popup_title);
 };
+
+export async function bookUserttitle (page:Page) {
+    await page.waitForLoadState('networkidle');
+    return await page.locator(Availabilitylocator.bookUser);
+    
+}

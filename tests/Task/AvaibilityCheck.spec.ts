@@ -76,9 +76,9 @@ describe('Sign in flow', () => {
         });
         await step(' 2.Check if PM can view member detail pop-up', async () => {
             await availabilityCheck.editUserInAvailabilityCheck(page);
-            await availabilityCheck.WinndowTitlrPop(page);
             const window_popup_title = await availabilityCheck.WinndowTitlrPop(page);
-            expect(window_popup_title).toContain('Resource detail')
+            console.log("window title is" + window_popup_title)
+            expect(window_popup_title).toContainText('Resource detail')
         })
     })
 
@@ -92,10 +92,14 @@ describe('Sign in flow', () => {
             await availabilityCheck.SearchUser(page);
             await availabilityCheck.EditUser(page);
             const windownPopup = await availabilityCheck.WinndowTitlrPop(page);
-            expect(windownPopup).toContain('Resource detail');
+            expect(windownPopup).toContainText('Resource detail');
             console.log(windownPopup);
         });
     });
+    describe('Remove booking before and after tests', ()=>{
+        
+    })
 
-})
+  })
+
 

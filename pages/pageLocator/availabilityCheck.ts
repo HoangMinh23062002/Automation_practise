@@ -22,5 +22,6 @@ export const Availabilitylocator={
     exportButton: "button[class='btn btn-outline-success']",
     btn_show_more: '//span[contains(text(), "Show more")]',
     department_input: "//label[text()='Department']/following-sibling::div//input",
-
+    result:"//p[normalize-space()='user7auto']",
+    bookUser:"//h4[contains(@class,'card-title text-uppercase')]"
 }
