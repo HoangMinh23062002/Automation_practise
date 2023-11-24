@@ -110,3 +110,14 @@ export const availability_info = {
   user_id: 2719,
   project_name: "Automation Test Project 6",
 }
+
+export const API = {
+  booking: {
+    successful_deletion_message: "success delete bookings from project"
+  },
+  Sync_API: "https://sbs-others.hn.smartosc.com/",
+  BasicAuth_token: "Basic c3JhQHNtYXJ0b3NjLmNvbTpAU3JhdGVzdGxvZ2luMTIz",
+  Sync_token:"WoaCoxpX6yUoEfZnAy4ERszWRYFOyUcipzxqqlpXlDaFeU6vSPgJhbwWmtbA",
+  leadid: "425479000022834444",
+  parentdepartmentid: "425479000022120361",
+}

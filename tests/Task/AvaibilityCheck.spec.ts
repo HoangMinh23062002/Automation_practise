@@ -5,6 +5,11 @@ import * as testData from '../../Configs/testData';
 import * as common from '../../pages/pageLocator/common'
 import { Availabilitylocator } from '../../pages/pageLocator/availabilityCheck'
 import * as availabilityCheck from '../../pages/PageActions/availabilityCheck'
+import * as booking from '../../pages/PageActions/booking'
+
+import * as bookingAPI from '../../API/booking';
+
+
 
 const { step, beforeEach, describe, afterEach } = test;
 
@@ -77,10 +82,10 @@ describe('Sign in flow', () => {
         await step(' 2.Check if PM can view member detail pop-up', async () => {
             await availabilityCheck.editUserInAvailabilityCheck(page);
             const window_popup_title = await availabilityCheck.WinndowTitlrPop(page);
-            console.log("window title is" + window_popup_title)
-            expect(window_popup_title).toContainText('Resource detail')
-        })
-    })
+            console.log("window title is" + window_popup_title);
+            expect(window_popup_title).toContainText('Resource detail');
+        });
+    });
 
     test('[Availability Check] Verify that PC/TPC can view member detail pop-up in Availability Check - @TC58 @regression', async ({ page }) => {
         await step('1.Login with HOD account and go to Availability Check screen', async () => {
@@ -96,10 +101,35 @@ describe('Sign in flow', () => {
             console.log(windownPopup);
         });
     });
-    describe('Remove booking before and after tests', ()=>{
-        
-    })
 
-  })
+    describe('Remove booking before and after tests', () => {
+        beforeEach(async ({ page }) => {
+            const Customer_tocken = await bookingAPI.GetCustomerTocken(testData.userLogin.admin.email, testData.userLogin.password)
+            await bookingAPI.deketeBooking(testData.availability_info.project_id, testData.availability_info.user_id, Customer_tocken)
+            await page.goto(urls.baseUrl);
+        });
+        afterEach(async ({ page }) => {
+            const customer_token = await bookingAPI.GetCustomerTocken(testData.userLogin.admin.email, testData.userLogin.password)
+            await bookingAPI.deketeBooking(testData.availability_info.project_id, testData.availability_info.user_id, customer_token)
+        });
+        test('[Availability Check]  Verify that Admin can proceed to Quick booking with selected account in Availability Check via BOOK ALL function - @TC62 @regression', async ({page}) => {
+            await step('1.Login with admin account and go to availability check page', async()=>{
+                await login.loginCustomer(page, testData.userLogin.admin.email, testData.userLogin.password);
+                await page.waitForLoadState('networkidle');
+                await common.AvailabilityCheck(page);
+            });
+            await step('2.Check if admin can book member through availability check screen', async()=>{
+                await availabilityCheck.bookUserThroughAvailabilityCheckScreen(page);
+            });
+            await step('3.Make a internal booking and verify booking is successfull', async()=>{
+                await booking.verify_that_user_can_make_quick_booking_successfully(page, testData.availability_info.project_name, testData.availability_info.account_keyword);
+            });
+            await step('4.Verify if the user already appear on Request screen', async()=>{
+                await availabilityCheck.logoutAndLoginAgainWithAnotherAccount(page,  testData.userLogin.admin.email);
+                await common.GetTab(page)
+            })
+        });
+    });
+});
 
 
